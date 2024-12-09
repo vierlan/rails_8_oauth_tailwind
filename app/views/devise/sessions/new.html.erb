@@ -1,0 +1,40 @@
+<h2>Log in</h2>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password, autocomplete: "current-password" %>
+  </div>
+
+  <% if devise_mapping.rememberable? %>
+    <div class="field">
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Log in" %>
+  </div>
+<% end %>
+
+<div id="g_id_onload"
+     data-client_id="<% Rails.application.credentials.google[:client_id] %>"
+     data-login_uri="https://127.0.0.1:3000/home">
+</div>
+
+<%= render "devise/shared/links" %>
+<% if current_user %>
+<h2><%= current_user.email %></h2>
+<%= link_to "Edit Account", edit_user_registration_path %>
+<%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
+<% else %>
+ <%= link_to "Login", new_user_session_path %>
+<%= link_to "Sign Up", new_user_registration_path %>
+
+<% end %>
